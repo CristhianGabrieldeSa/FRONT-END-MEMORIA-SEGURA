@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Sistema</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cloudflare.com">
+</head>
+
+<body>
+    <!--***************************BARRA DE NAVEGAÇÃO NA LATERAL: INÍCIO***************************-->
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img class="logo" src="../../img/logotipo.png">
+                <div class="logo-text">
+                    <h2>Sistema de Apoio</h2>
+                    <span>Cuidado que conecta</span>
+                </div>
+            </div>
+            <nav>
+                <a href="../index.html"><i class="fa-solid fa-house"></i>Dashboard</a>
+                <a href="../paginas/usuario.html"><i class="fa-solid fa-users"></i>Usuários</a>
+                <a href="../paginas/medicamentos.html"><i class="fa-solid fa-pills"></i>Medicamentos</a>
+                <a href="../paginas/rotina.html"><i class="fa-solid fa-calendar-days"></i>Rotina</a>
+                <a href="../paginas/ocorrencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Ocorrências</a>
+                <a href="../paginas/alertas.html"><i class="fa-solid fa-bell"></i>Alertas</a>
+                <a href="../paginas/comunicacao.html" class="active"><i class="fa-solid fa-comment"></i>Comunicação</a>
+            </nav>
+        </aside>
+        <!--***************************BARRA DE NAVEGAÇÃO NA LATERAL: FINAL***************************-->
+
+        <!-- ***************************COLUNAS SUPERIOR NA HORIZONTAL: INÍCIO*************************** -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Bem-vindo(a)!❤️</h1>
+                    <p>Aqui está um resumo geral do sistema.</p>
+                </div>
+                <div class="date-box">
+                    25 de Maio, de 2026
+                </div>
+            </header>
+
+            <section class="stats">
+                <a href="usuario.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+                        <h2>0</h2>
+                        <p>Usuários</p>
+                    </div>
+                </a>
+
+                <a href="medicamentos.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-pills"></i></div>
+                        <h2>0</h2>
+                        <p>Medicamentos</p>
+                    </div>
+                </a>
+
+                <a href="atividades.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-bookmark"></i></div>
+                        <h2>0</h2>
+                        <p>Atividades</p>
+                    </div>
+                </a>
+
+                <a href="alertas.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-bell"></i></div>
+                        <h2>0</h2>
+                        <p>Alertas</p>
+                    </div>
+                </a>
+            </section>
+            <!-- ***************************COLUNAS SUPERIOR NA HORIZONTAL: FINAL*************************** -->
+
+            <!-- ***************************COLUNAS INFERIOR NA VERTICAL: INÍCIO*************************** -->
+            <a href="medicamentos.html">
+                <section class="cards-grid">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-pills"></i>
+                        </div>
+                        <h2>Medicamentos</h2>
+                        <p>Gerencie seus medicamentos cadastrados, horários e informações importantes.</p>
+                        <i class="fa-solid fa-pills bg-icon"></i>
+                    </div>
+            </a>
+
+            <a href="rotina.html">
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h2>Rotinas</h2>
+                    <p>Visualize e acompanhe todas as atividades e medicações diárias.</p>
+                    <i class="fa-solid fa-calendar-days bg-icon"></i>
+                </div>
+            </a>
+
+            <a href="ocorrencias.html">
+                <div class="feature-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h2>Ocorrências</h2>
+                    <p>Acompanhe e gerencie as ocorrências registradas no sistema.</p>
+                    <i class="fa-solid fa-triangle-exclamation bg-icon"></i>
+                </div>
+            </a>
+            </section>
+            <!-- ***************************COLUNAS INFERIOR NA VERTICAL: FINAL*************************** -->
+        </main>
+    </div>
+    <script src="../../script.js"></script>
+    <script src="../../protecao.js"></script>
+</body>
+
+</html>

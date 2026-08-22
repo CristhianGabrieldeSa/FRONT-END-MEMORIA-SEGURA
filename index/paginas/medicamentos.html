@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Sistema</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cloudflare.com">
+</head>
+
+<body>
+    <!--***************************BARRA DE NAVEGAÇÃO NA LATERAL: INÍCIO***************************-->
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img class="logo" src="../../img/logotipo.png">
+                <div class="logo-text">
+                    <h2>Sistema de Apoio</h2>
+                    <span>Cuidado que conecta</span>
+                </div>
+            </div>
+            <nav>
+                <a href="../index.html"><i class="fa-solid fa-house"></i>Dashboard</a>
+                <a href="../paginas/usuario.html"><i class="fa-solid fa-users"></i>Usuários</a>
+                <a href="../paginas/medicamentos.html" class="active"><i class="fa-solid fa-pills"></i>Medicamentos</a>
+                <a href="../paginas/rotina.html"><i class="fa-solid fa-calendar-days"></i>Rotina</a>
+                <a href="../paginas/ocorrencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Ocorrências</a>
+                <a href="../paginas/alertas.html"><i class="fa-solid fa-bell"></i>Alertas</a>
+                <a href="../paginas/comunicacao.html"><i class="fa-solid fa-comment"></i>Comunicação</a>
+            </nav>
+        </aside>
+        <!--***************************BARRA DE NAVEGAÇÃO NA LATERAL: FINAL***************************-->
+
+        <!-- ***************************COLUNAS SUPERIOR NA HORIZONTAL: INÍCIO*************************** -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <h1>Medicamentos</h1>
+                    <p>Aqui estão todas as suas medicações.</p>
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="data-atual">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span id="dataAtual"></span>
+                    </div>
+
+                    <button class="btn-novo">
+                        <i class="fa-solid fa-plus"></i>
+                        Novo medicamento
+                    </button>
+
+                </div>
+
+            </header>
+            <section class="stats">
+
+                <a href="medicamentos.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-pills"></i></div>
+                        <h2>0</h2>
+                        <p>Medicamentos</p>
+                    </div>
+                </a>
+
+                <a href="#">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+                        <h2>0</h2>
+                        <p>Hoje</p>
+                    </div>
+                </a>
+
+                <a href="alertas.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-bell"></i></div>
+                        <h2>0</h2>
+                        <p>Alertas</p>
+                    </div>
+                </a>
+
+                <a href="atividades.html">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-bookmark"></i></div>
+                        <h2>0</h2>
+                        <p>Atividades</p>
+                    </div>
+                </a>
+
+
+            </section>
+            <!-- *************************** ÁREA DOS MEDICAMENTOS: INÍCIO *************************** -->
+
+            <section class="medicamentos-area">
+
+                <!-- LISTA DE MEDICAMENTOS -->
+                <div class="medicamentos-lista">
+
+                    <div class="section-header">
+
+                        <h2>
+                            <i class="fa-solid fa-pills"></i>
+                            Seus medicamentos
+                        </h2>
+
+                        <span id="contadorMedicamentos">
+                            0 medicamentos cadastrados
+                        </span>
+
+                    </div>
+
+
+                    <div id="listaMedicamentos">
+
+                        <!-- OS MEDICAMENTOS VÃO APARECER AQUI -->
+
+                    </div>
+
+
+                    <button class="historico-btn">
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        Ver histórico de medicamentos
+
+                    </button>
+
+                </div>
+
+
+                <!-- LATERAL -->
+                <aside class="medicamentos-lateral">
+
+
+                    <!-- COMO FUNCIONA -->
+                    <div class="info-card">
+
+                        <h2>
+                            <i class="fa-solid fa-circle-info"></i>
+                            Como funciona?
+                        </h2>
+
+
+                        <div class="info-item">
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            <p>
+                                Cadastre seus medicamentos
+                                através do botão
+                                <strong>+ Novo medicamento</strong>.
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <i class="fa-regular fa-clock"></i>
+
+                            <p>
+                                Informe os horários e a
+                                frequência de cada medicamento.
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <i class="fa-solid fa-bell"></i>
+
+                            <p>
+                                Receba lembretes para não
+                                esquecer suas doses.
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            <p>
+                                Você poderá editar ou remover
+                                seus medicamentos quando necessário.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ATENÇÃO -->
+                    <div class="atencao-card">
+
+                        <h2>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Atenção
+                        </h2>
+
+                        <p>
+                            Cadastre os medicamentos de acordo
+                            com a orientação do seu profissional
+                            de saúde.
+                        </p>
+
+                        <p>
+                            Em caso de dúvidas, procure
+                            orientação profissional.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+            <!-- *************************** ÁREA DOS MEDICAMENTOS: FINAL *************************** -->
+
+            <!-- *************************** ÁREA PRINCIPAL: INÍCIO *************************** -->
+
+            <section class="medicamentos-area">
+
+                <!-- LISTA DE MEDICAMENTOS -->
+                <div class="medicamentos-lista">
+
+                    <div class="section-title">
+                        <h2>
+                            <i class="fa-solid fa-list"></i>
+                            Seus medicamentos
+                        </h2>
+                    </div>
+                    <button class="historico-btn">
+                        <i class="fa-regular fa-calendar"></i>
+                        Ver histórico de medicamentos
+                    </button>
+
+                </div>
+
+
+                <!-- LATERAL DIREITA -->
+                <aside class="medicamentos-lateral">
+
+                    <div class="info-card">
+
+                        <h2>
+                            <i class="fa-solid fa-circle-info"></i>
+                            Como funciona?
+                        </h2>
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-pills"></i>
+                            </div>
+
+                            <p>
+                                Os medicamentos prescritos
+                                serão exibidos aqui.
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-regular fa-clock"></i>
+                            </div>
+
+                            <p>
+                                Você poderá visualizar doses,
+                                horários e orientações.
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-bell"></i>
+                            </div>
+
+                            <p>
+                                Receba alertas e lembretes
+                                para não esquecer suas doses.
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+
+                            <p>
+                                Acompanhe seu histórico
+                                de medicações.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AVISO -->
+                    <div class="atencao-card">
+
+                        <h2>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Atenção
+                        </h2>
+
+                        <p>
+                            Este sistema não substitui as
+                            orientações médicas.
+                        </p>
+
+                        <p>
+                            Em caso de dúvidas, consulte
+                            seu profissional de saúde.
+                        </p>
+
+                        <i class="fa-solid fa-pills atencao-icon"></i>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+            <!-- *************************** ÁREA PRINCIPAL: FINAL *************************** -->
+
+
+            <!-- *************************** MODAL NOVO MEDICAMENTO: INÍCIO *************************** -->
+
+            <div class="modal-overlay" id="modalMedicamento">
+
+                <div class="modal-medicamento">
+
+                    <div class="modal-header">
+
+                        <div>
+
+                            <h2>
+                                <i class="fa-solid fa-pills"></i>
+                                Novo medicamento
+                            </h2>
+
+                            <p>
+                                Cadastre uma nova medicação para acompanhar sua rotina.
+                            </p>
+
+                        </div>
+
+                        <button class="modal-fechar" id="fecharModal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                    </div>
+
+
+                    <form id="formMedicamento">
+
+                        <div class="form-group">
+
+                            <label for="nomeMedicamento">
+                                Nome do medicamento
+                            </label>
+
+                            <input type="text" id="nomeMedicamento" placeholder="Ex: Losartana" required>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="dosagem">
+                                    Dosagem
+                                </label>
+
+                                <input type="text" id="dosagem" placeholder="Ex: 50 mg" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="formaMedicamento">
+                                    Forma
+                                </label>
+
+                                <select id="formaMedicamento" required>
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="comprimido">
+                                        Comprimido
+                                    </option>
+
+                                    <option value="capsula">
+                                        Cápsula
+                                    </option>
+
+                                    <option value="gotas">
+                                        Gotas
+                                    </option>
+
+                                    <option value="xarope">
+                                        Xarope
+                                    </option>
+
+                                    <option value="pomada">
+                                        Pomada
+                                    </option>
+
+                                    <option value="outro">
+                                        Outro
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="quantidade">
+                                    Quantidade por dose
+                                </label>
+
+                                <input type="number" id="quantidade" min="1" placeholder="Ex: 1" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="frequencia">
+                                    Frequência
+                                </label>
+
+                                <select id="frequencia" required>
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="1">
+                                        1 vez ao dia
+                                    </option>
+
+                                    <option value="2">
+                                        2 vezes ao dia
+                                    </option>
+
+                                    <option value="3">
+                                        3 vezes ao dia
+                                    </option>
+
+                                    <option value="4">
+                                        4 vezes ao dia
+                                    </option>
+
+                                    <option value="6h">
+                                        A cada 6 horas
+                                    </option>
+
+                                    <option value="8h">
+                                        A cada 8 horas
+                                    </option>
+
+                                    <option value="12h">
+                                        A cada 12 horas
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="horario">
+                                Horário da próxima dose
+                            </label>
+
+                            <input type="time" id="horario" required>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="dataInicio">
+                                    Data de início
+                                </label>
+
+                                <input type="date" id="dataInicio" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="dataFim">
+                                    Data de término
+                                </label>
+
+                                <input type="date" id="dataFim">
+
+                                <small>
+                                    Deixe em branco se não houver data definida.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="observacoes">
+                                Observações
+                            </label>
+
+                            <textarea id="observacoes" rows="3" placeholder="Ex: Tomar após o almoço."></textarea>
+
+                        </div>
+
+
+                        <div class="modal-acoes">
+
+                            <button type="button" class="btn-cancelar" id="cancelarMedicamento">
+                                Cancelar
+                            </button>
+
+                            <button type="submit" class="btn-salvar">
+                                <i class="fa-solid fa-check"></i>
+                                Salvar medicamento
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- *************************** MODAL NOVO MEDICAMENTO: FINAL *************************** -->
+
+
+            <!-- ***************************COLUNAS SUPERIOR NA HORIZONTAL: FINAL*************************** -->
+
+    </div>
+    <div id="modalDetalhes" class="modal">
+
+        <div class="modal-conteudo">
+
+            <button id="fecharDetalhes" class="fechar-modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2>Detalhes do medicamento</h2>
+
+            <div class="detalhes-medicamento">
+
+                <p>
+                    <strong>Nome:</strong>
+                    <span id="detalheNome"></span>
+                </p>
+
+                <p>
+                    <strong>Dosagem:</strong>
+                    <span id="detalheDosagem"></span>
+                </p>
+
+                <p>
+                    <strong>Quantidade:</strong>
+                    <span id="detalheQuantidade"></span>
+                </p>
+
+                <p>
+                    <strong>Forma:</strong>
+                    <span id="detalheForma"></span>
+                </p>
+
+                <p>
+                    <strong>Frequência:</strong>
+                    <span id="detalheFrequencia"></span>
+                </p>
+
+                <p>
+                    <strong>Horário:</strong>
+                    <span id="detalheHorario"></span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div id="modalEditar" class="modal">
+
+        <div class="modal-conteudo">
+
+            <button id="fecharEditar" class="fechar-modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2>Editar dosagem</h2>
+
+            <div class="campo-editar">
+
+                <label for="novaDosagem">Dosagem</label>
+
+                <input type="text" id="novaDosagem" placeholder="Ex: 500mg">
+
+            </div>
+
+            <div class="acoes-editar">
+
+                <button id="cancelarEditar" class="btn-cancelar">
+                    Cancelar
+                </button>
+
+                <button id="salvarEdicao" class="btn-salvar">
+                    Salvar
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+</body>
+
+<!-- *************************** ÁREA PRINCIPAL: FINAL *************************** -->
+
+<!-- ***************************COLUNAS SUPERIOR NA HORIZONTAL: FINAL*************************** -->
+
+</div>
+<script src="../../script.js"></script>
+<script src="../../protecao.js"></script>
+</body>
+
+</html>

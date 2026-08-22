@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Sistema</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <!--***************************BARRA DE NAVEGAÇÃO NA LATERAL: INÍCIO***************************-->
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img class="logo" src="../../img/logotipo.png">
+                <div class="logo-text">
+                    <h2>Sistema de Apoio</h2>
+                    <span>Cuidado que conecta</span>
+                </div>
+            </div>
+            <nav>
+                <a href="../index.html"><i class="fa-solid fa-house"></i>Dashboard</a>
+                <a href="../paginas/usuario.html" class="active"><i class="fa-solid fa-users"></i>Usuários</a>
+                <a href="../paginas/medicamentos.html"><i class="fa-solid fa-pills"></i>Medicamentos</a>
+                <a href="../paginas/rotina.html"><i class="fa-solid fa-calendar-days"></i>Rotina</a>
+                <a href="../paginas/ocorrencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Ocorrências</a>
+                <a href="../paginas/alertas.html"><i class="fa-solid fa-bell"></i>Alertas</a>
+                <a href="../paginas/comunicacao.html"><i class="fa-solid fa-comment"></i>Comunicação</a>
+            </nav>
+        </aside>
+        <!--***************************BARRA DE NAVEGAÇÃO NA LATERAL: FINAL***************************-->
+
+        <!-- ***************************COLUNAS SUPERIOR NA HORIZONTAL: INÍCIO*************************** -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Usuários</h1>
+                    <p>Aqui estão todos os usuários no sistema.</p>
+                </div>
+                <div class="data-atual">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span id="dataAtual"></span>
+                </div>
+            </header>
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <div class="stat-info">
+                        <span>Total de usuários</span>
+                        <strong>0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+
+                    <div class="stat-info">
+                        <span>Usuários ativos</span>
+                        <strong>0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-user-xmark"></i>
+                    </div>
+
+                    <div class="stat-info">
+                        <span>Usuários inativos</span>
+                        <strong>0</strong>
+                    </div>
+                </div>
+
+            </section>
+            <section class="usuarios-section">
+
+                <div class="usuarios-header">
+                    <div>
+                        <h2>Usuários cadastrados</h2>
+                        <p>Consulte os usuários cadastrados no sistema.</p>
+                    </div>
+
+                    <button class="btn-novo-usuario">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Novo usuário
+                    </button>
+                </div>
+
+                <div class="usuarios-filtros">
+                    <div class="campo-busca">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="buscarUsuario" placeholder="Buscar por nome ou e-mail...">
+                    </div>
+                </div>
+
+                <div class="usuarios-lista" id="listaUsuarios">
+
+                </div>
+
+            </section>
+        </main>
+    </div>
+    <!-- =========================================================
+     MODAL DE DETALHES DO USUÁRIO
+     ========================================================= -->
+
+    <div id="modalDetalhesUsuario" class="modal-usuario">
+
+        <div class="modal-usuario-content">
+
+            <div class="modal-usuario-header">
+
+                <div>
+                    <h2>Detalhes do usuário</h2>
+                    <p>Informações do usuário cadastrado.</p>
+                </div>
+
+                <button id="fecharDetalhesUsuario" class="modal-usuario-fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="usuario-perfil">
+
+                <div class="usuario-avatar-grande">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div>
+                    <h3 id="detalheUsuarioNome">Maria da Silva</h3>
+                    <span id="detalheUsuarioStatus" class="status-ativo">
+                        Ativo
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="usuario-detalhes-grid">
+
+                <div class="usuario-detalhe-item">
+                    <span>E-mail</span>
+                    <strong id="detalheUsuarioEmail">
+                        maria@email.com
+                    </strong>
+                </div>
+
+                <div class="usuario-detalhe-item">
+                    <span>Data de cadastro</span>
+                    <strong id="detalheUsuarioData">
+                        20/08/2026
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="usuario-resumo">
+
+                <h3>Resumo</h3>
+
+                <div class="usuario-resumo-grid">
+
+                    <div class="resumo-item">
+                        <i class="fa-solid fa-pills"></i>
+
+                        <div>
+                            <span>Medicamentos</span>
+                            <strong id="detalheMedicamentos">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="resumo-item">
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        <div>
+                            <span>Atividades</span>
+                            <strong id="detalheAtividades">0</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-usuario-footer">
+
+                <button id="fecharModalUsuario" class="btn-fechar-modal">
+                    Fechar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- =========================================================
+     MODAL DE NOVO USUÁRIO
+     ========================================================= -->
+
+    <div id="modalNovoUsuario" class="modal-usuario">
+
+        <div class="modal-usuario-content">
+
+            <div class="modal-usuario-header">
+
+                <div>
+                    <h2>Novo usuário</h2>
+                    <p>Cadastre um novo usuário no sistema.</p>
+                </div>
+
+                <button id="fecharNovoUsuario" class="modal-usuario-fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <form id="formNovoUsuario" class="form-novo-usuario">
+
+                <div class="campo-formulario">
+                    <label for="novoUsuarioNome">
+                        Nome completo
+                    </label>
+
+                    <input type="text" id="novoUsuarioNome" placeholder="Digite o nome completo" required>
+                </div>
+
+
+                <div class="campo-formulario">
+                    <label for="novoUsuarioEmail">
+                        E-mail
+                    </label>
+
+                    <input type="email" id="novoUsuarioEmail" placeholder="Digite o e-mail" required>
+                </div>
+
+
+                <div class="campo-formulario">
+                    <label for="novoUsuarioStatus">
+                        Status
+                    </label>
+
+                    <select id="novoUsuarioStatus">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
+                </div>
+
+
+                <div class="modal-novo-footer">
+
+                    <button type="button" id="cancelarNovoUsuario" class="btn-cancelar-usuario">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn-cadastrar-usuario">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Cadastrar usuário
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+     MODAL DE EDITAR USUÁRIO
+     ========================================================= -->
+
+    <div id="modalEditarUsuario" class="modal-usuario">
+
+        <div class="modal-usuario-content">
+
+            <div class="modal-usuario-header">
+
+                <div>
+                    <h2>Editar usuário</h2>
+                    <p>Altere as informações do usuário.</p>
+                </div>
+
+                <button id="fecharEditarUsuario" class="modal-usuario-fechar" type="button">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <form id="formEditarUsuario" class="form-novo-usuario">
+
+                <div class="campo-formulario">
+
+                    <label for="editarUsuarioNome">
+                        Nome completo
+                    </label>
+
+                    <input type="text" id="editarUsuarioNome" placeholder="Digite o nome completo" required>
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="editarUsuarioEmail">
+                        E-mail
+                    </label>
+
+                    <input type="email" id="editarUsuarioEmail" placeholder="Digite o e-mail" required>
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="editarUsuarioStatus">
+                        Status
+                    </label>
+
+                    <select id="editarUsuarioStatus">
+
+                        <option value="Ativo">
+                            Ativo
+                        </option>
+
+                        <option value="Inativo">
+                            Inativo
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="modal-novo-footer">
+
+                    <button type="button" id="cancelarEditarUsuario" class="btn-cancelar-usuario">
+
+                        Cancelar
+
+                    </button>
+
+
+                    <button type="submit" class="btn-cadastrar-usuario">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Salvar alterações
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+     MODAL DE CONFIRMAÇÃO DE EXCLUSÃO
+     ========================================================= -->
+
+    <div id="modalExcluirUsuario" class="modal-usuario">
+
+        <div class="modal-usuario-content modal-confirmacao">
+
+            <div class="modal-confirmacao-icon">
+                <i class="fa-solid fa-trash"></i>
+            </div>
+
+            <div class="modal-usuario-header">
+
+                <div>
+                    <h2>Excluir usuário?</h2>
+
+                    <p id="textoExcluirUsuario">
+                        Tem certeza que deseja excluir este usuário?
+                    </p>
+                </div>
+
+                <button id="fecharExcluirUsuario" class="modal-usuario-fechar" type="button">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-novo-footer">
+
+                <button type="button" id="cancelarExcluirUsuario" class="btn-cancelar-usuario">
+
+                    Cancelar
+
+                </button>
+
+
+                <button type="button" id="confirmarExcluirUsuario" class="btn-excluir-usuario">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Excluir usuário
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="../../script.js"></script>
+    <script src="../../protecao.js"></script>
+</body>
+
+</html>
