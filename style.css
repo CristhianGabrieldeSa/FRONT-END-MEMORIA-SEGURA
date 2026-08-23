@@ -3141,3 +3141,221 @@ a {
     }
 
 }
+.module-section {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.module-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 320px;
+}
+.module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .module-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .module-title-wrap h3 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .module-title-wrap p {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .module-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 0;
+      border-radius: 16px;
+    }
+
+    .module-icon i {
+      font-size: 20px;
+    }
+    .pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill.positive {
+      background: #ecfdf3;
+      color: #047857;
+    }
+
+    .pill.warning {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+
+    .pill.info {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .module-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .module-item {
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .module-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .module-item strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .module-item span {
+      color: #64748b;
+      font-size: 13px;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .module-item .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .module-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .module-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #ede9fe;
+      color: #6d28d9;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .module-btn.primary {
+      background: #7c3aed;
+      color: white;
+    }
+
+    .module-empty {
+      color: #64748b;
+      font-size: 14px;
+      padding: 6px 0;
+    }
+
+/** @@@@@@@@@@@@@@@@ CONFIGURAÇÃO GRID INFERIOR VERTICAL: FINAL @@@@@@@@@@@@@@@@ **/
+
+
+/** @@@@@@@@@@@@@@@@ ENTRADA DOS CARDS QUANDO ATT A PAGE: INÍCIO @@@@@@@@@@@@@@@@ **/
+
+    @keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+/** @@@@@@@@@@@@@@@@ ENTRADA DOS CARDS QUANDO ATT A PAGE: FINAL @@@@@@@@@@@@@@@@ **/
+
+
+/** @@@@@@@@@@@@@@@@ RESPONSIVIDADE PARA TABLET: INÍCIO @@@@@@@@@@@@@@@@ **/
+
+@media (max-width: 1024px) {
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/** @@@@@@@@@@@@@@@@ RESPONSIVIDADE PARA TABLET: FINAL @@@@@@@@@@@@@@@@ **/
+
+
+/** @@@@@@@@@@@@@@@@ RESPONSIVIDADE PARA MOBILE: INÍCIO @@@@@@@@@@@@@@@@ **/
+
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .cards-grid,
+  .stats,
+  .module-section {
+    grid-template-columns: 1fr;
+  }
+
+}
+/** @@@@@@@@@@@@@@@@ RESPONSIVIDADE PARA MOBILE: FINAL @@@@@@@@@@@@@@@@ **/
+
+
+/** @@@@@@@@@@@@@@@@ CONFIGURAÇÃO DOS ÍCONES: INÍCIO @@@@@@@@@@@@@@@@ **/
+
+.icon-box {
+  width: 60px;
+  height: 60px;
+
+  background: #ede9fe;
+
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+}
+
+.icon-box i {
+  font-size: 26px;
+  color: #7c3aed;
+}
