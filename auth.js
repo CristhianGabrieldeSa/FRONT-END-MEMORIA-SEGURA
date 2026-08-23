@@ -7,29 +7,37 @@
 USUÁRIO DE DEMONSTRAÇÃO
 ========================================================= */
 
-const usuarioDemo = {
-    id: 1,
-    nome: "Usuário Demonstração",
-    email: "admin@memoriasegura.com", // EMAIL PARA TESTE
-    senha: "123456" // SENHA PARA TESTE
-};
+const usuarioDemo = [
+    {
+        id: 1,
+        nome: "Usuário Demonstração",
+        email: "admin@memoriasegura.com", // EMAIL PARA TESTE
+        senha: "123456", // SENHA PARA TESTE
+        perfil: "administrador"
+    },
+    {
+        id: 2,
+        nome: "Usuário Idoso",
+        email: "idoso@memoriasegura.com", // EMAIL PARA TESTE
+        senha: "123456", // SENHA PARA TESTE
+        perfil: "idoso"
+    }];
+
 
 const usuariosSalvos =
     JSON.parse(localStorage.getItem("usuarios")) || [];
 
-const usuarioDemoExiste = usuariosSalvos.some(function (usuario) {
-    return usuario.email === usuarioDemo.email;
+usuarioDemo.forEach(function (usuario) {
+    const usuarioDemoExiste = usuariosSalvos.some(function (usuarioSalvo) {
+        return usuarioSalvo.email === usuario.email;
+    });
+
+    if (!usuarioDemoExiste) {
+        usuariosSalvos.push(usuario);
+    }
 });
 
-if (!usuarioDemoExiste) {
-
-    usuariosSalvos.push(usuarioDemo);
-
-    localStorage.setItem(
-        "usuarios",
-        JSON.stringify(usuariosSalvos)
-    );
-}
+localStorage.setItem("usuarios", JSON.stringify(usuariosSalvos));
 
 /* =========================================================
    CADASTRO
@@ -47,6 +55,7 @@ if (formCadastro) {
         const email = document.getElementById("emailCadastro").value.trim().toLowerCase();
         const senha = document.getElementById("senhaCadastro").value;
         const confirmarSenha = document.getElementById("confirmarSenha").value;
+        const perfil = document.getElementById("perfilCadastro")?.value || "cuidador";
 
         const mensagem = document.getElementById("mensagemCadastro");
 
@@ -132,7 +141,9 @@ if (formCadastro) {
 
             email: email,
 
-            senha: senha
+            senha: senha,
+
+            perfil: perfil
 
         };
 
@@ -261,7 +272,9 @@ if (formLogin) {
 
                 nome: usuario.nome,
 
-                email: usuario.email
+                email: usuario.email,
+
+                perfil: usuario.perfil || "cuidador"
 
             })
         );

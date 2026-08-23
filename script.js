@@ -377,7 +377,327 @@ if (listaMedicamentos) {
     carregarMedicamentos();
 }
 
+// =========================================================
+// CONFIGURAÇÃO DA PÁGINA DE COMUNICAÇÃO
+// =========================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const listaMensagens = document.getElementById("listaMensagens");
+    const contadorMensagens = document.getElementById("contadorMensagens");
+    const modalMensagem = document.getElementById("modalMensagem");
+    const formMensagem = document.getElementById("formMensagem");
+    const abrirModalMensagem = document.getElementById("abrirModalMensagem");
+    const fecharModalMensagem = document.getElementById("fecharModalMensagem");
+    const cancelarMensagem = document.getElementById("cancelarMensagem");
+    const marcarMensagensLidas = document.getElementById("marcarMensagensLidas");
+    const destinatarioMensagem = document.getElementById("destinatarioMensagem");
+
+    if (!listaMensagens || !modalMensagem || !formMensagem) {
+        return;
+    }
+
+    const sessao = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+    const perfil = String(sessao?.perfil || "cuidador").toLowerCase();
+    const nomePerfil = perfil === "familiar" ? "Familiar" : perfil === "cuidador" ? "Cuidador" : "Equipe";
+    let mensagens = JSON.parse(localStorage.getItem("mensagens") || "[]");
+
+    if (perfil === "familiar") {
+        destinatarioMensagem.value = "cuidador";
+    }
+
+    function nomeDestinatario(tipo) {
+        return tipo === "familiar" ? "Familiares" : "Cuidador";
+    }
+
+    function formatarData(data) {
+        return new Date(data).toLocaleString("pt-BR", {
+            day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit"
+        });
+    }
+
+    function criarMensagem(mensagem) {
+        const item = document.createElement("li");
+        item.className = "module-item";
+        if (!mensagem.lidaPor?.includes(sessao?.email)) {
+            item.classList.add("mensagem-nao-lida");
+        }
+
+        const titulo = document.createElement("strong");
+        titulo.textContent = `${mensagem.autor} (${mensagem.perfil})`;
+        const texto = document.createElement("span");
+        texto.textContent = mensagem.texto;
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        const data = document.createElement("span");
+        data.textContent = `${formatarData(mensagem.data)} | Para: ${nomeDestinatario(mensagem.destinatario)}`;
+        const status = document.createElement("span");
+        status.className = `pill ${mensagem.lidaPor?.includes(sessao?.email) ? "info" : "positive"}`;
+        status.textContent = mensagem.lidaPor?.includes(sessao?.email) ? "Lida" : "Nova";
+        meta.append(data, status);
+        item.append(titulo, texto, meta);
+        listaMensagens.appendChild(item);
+    }
+
+    function renderizarMensagens() {
+        listaMensagens.innerHTML = "";
+        mensagens.slice().sort((a, b) => new Date(b.data) - new Date(a.data)).forEach(criarMensagem);
+        const naoLidas = mensagens.filter(mensagem => !mensagem.lidaPor?.includes(sessao?.email)).length;
+        contadorMensagens.textContent = `${naoLidas} ${naoLidas === 1 ? "nova" : "novas"}`;
+        if (!mensagens.length) {
+            const vazio = document.createElement("li");
+            vazio.className = "module-empty";
+            vazio.textContent = "Nenhuma mensagem enviada ainda.";
+            listaMensagens.appendChild(vazio);
+        }
+    }
+
+    function fecharModal() {
+        modalMensagem.style.display = "none";
+        formMensagem.reset();
+        destinatarioMensagem.value = perfil === "familiar" ? "cuidador" : "familiar";
+    }
+
+    abrirModalMensagem?.addEventListener("click", () => modalMensagem.style.display = "flex");
+    fecharModalMensagem.addEventListener("click", fecharModal);
+    cancelarMensagem.addEventListener("click", fecharModal);
+    modalMensagem.addEventListener("click", evento => {
+        if (evento.target === modalMensagem) {
+            fecharModal();
+        }
+    });
+
+    formMensagem.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+        mensagens.push({
+            id: Date.now(),
+            autor: sessao?.nome || "Usuário do sistema",
+            perfil: nomePerfil,
+            emailAutor: sessao?.email || "",
+            destinatario: destinatarioMensagem.value,
+            texto: document.getElementById("textoMensagem").value.trim(),
+            data: new Date().toISOString(),
+            lidaPor: [sessao?.email || ""]
+        });
+        localStorage.setItem("mensagens", JSON.stringify(mensagens));
+        renderizarMensagens();
+        fecharModal();
+    });
+
+    marcarMensagensLidas.addEventListener("click", function () {
+        mensagens.forEach(mensagem => {
+            mensagem.lidaPor = mensagem.lidaPor || [];
+            if (sessao?.email && !mensagem.lidaPor.includes(sessao.email)) {
+                mensagem.lidaPor.push(sessao.email);
+            }
+        });
+        localStorage.setItem("mensagens", JSON.stringify(mensagens));
+        renderizarMensagens();
+    });
+
+    window.addEventListener("storage", function (evento) {
+        if (evento.key === "mensagens") {
+            mensagens = JSON.parse(evento.newValue || "[]");
+            renderizarMensagens();
+        }
+    });
+
+    renderizarMensagens();
+});
+
+// =========================================================
+// CONFIGURAÇÃO DA PÁGINA DE ALERTAS
+// =========================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const listaAlertas = document.getElementById("listaAlertas");
+    const contadorAlertas = document.getElementById("contadorAlertas");
+
+    if (!listaAlertas || !contadorAlertas) {
+        return;
+    }
+
+    function horarioEmMinutos(horario) {
+        const partes = String(horario || "").split(":");
+        return Number(partes[0]) * 60 + Number(partes[1]);
+    }
+
+    function medicamentoAtivo(medicamento, hoje) {
+        return (!medicamento.dataInicio || medicamento.dataInicio <= hoje) &&
+            (!medicamento.dataFim || medicamento.dataFim >= hoje);
+    }
+
+    function criarAlertaMedicamento(medicamento, agoraEmMinutos) {
+        const horario = horarioEmMinutos(medicamento.horario);
+        const diferenca = horario - agoraEmMinutos;
+        const alerta = document.createElement("li");
+        alerta.className = "module-item";
+
+        const titulo = document.createElement("strong");
+        titulo.textContent = `Tomar ${medicamento.nome}`;
+        const descricao = document.createElement("span");
+        descricao.textContent = `${medicamento.dosagem || "Dose cadastrada"} | ${medicamento.quantidade || 1} ${medicamento.forma || "dose"}.`;
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        const horarioTexto = document.createElement("span");
+        horarioTexto.textContent = `Horário: ${medicamento.horario}`;
+        const status = document.createElement("span");
+        status.className = "pill";
+
+        if (diferenca < 0) {
+            status.classList.add("warning");
+            status.textContent = "Atrasado";
+        } else if (diferenca <= 15) {
+            status.classList.add("warning");
+            status.textContent = "Agora";
+        } else {
+            status.classList.add("info");
+            status.textContent = "Próximo";
+        }
+
+        meta.append(horarioTexto, status);
+        alerta.append(titulo, descricao, meta);
+        listaAlertas.appendChild(alerta);
+    }
+
+    function renderizarAlertas() {
+        const medicamentos = JSON.parse(localStorage.getItem("medicamentos") || "[]");
+        const agora = new Date();
+        const hoje = agora.toISOString().slice(0, 10);
+        const agoraEmMinutos = agora.getHours() * 60 + agora.getMinutes();
+        const medicamentosAtivos = medicamentos
+            .filter(medicamento => medicamento.horario && medicamentoAtivo(medicamento, hoje))
+            .sort((a, b) => horarioEmMinutos(a.horario) - horarioEmMinutos(b.horario));
+
+        listaAlertas.innerHTML = "";
+        medicamentosAtivos.forEach(medicamento => criarAlertaMedicamento(medicamento, agoraEmMinutos));
+        contadorAlertas.textContent = `${medicamentosAtivos.length} ${medicamentosAtivos.length === 1 ? "alerta" : "alertas"}`;
+
+        if (!medicamentosAtivos.length) {
+            const vazio = document.createElement("li");
+            vazio.className = "module-empty";
+            vazio.textContent = "Nenhum medicamento com horário cadastrado para hoje.";
+            listaAlertas.appendChild(vazio);
+        }
+    }
+
+    window.addEventListener("storage", function (evento) {
+        if (evento.key === "medicamentos") {
+            renderizarAlertas();
+        }
+    });
+
+    renderizarAlertas();
+    window.setInterval(renderizarAlertas, 60000);
+});
+
 //STORAGE MANTENDO OS ARQUIVOS SALVOS
+
+// =========================================================
+// CONFIGURAÇÃO DA PÁGINA DE OCORRÊNCIAS
+// =========================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const listaOcorrencias = document.getElementById("listaOcorrencias");
+    const modalOcorrencia = document.getElementById("modalOcorrencia");
+    const formOcorrencia = document.getElementById("formOcorrencia");
+    const abrirModalOcorrencia = document.getElementById("abrirModalOcorrencia");
+    const fecharModalOcorrencia = document.getElementById("fecharModalOcorrencia");
+    const cancelarOcorrencia = document.getElementById("cancelarOcorrencia");
+    const contadorOcorrencias = document.getElementById("contadorOcorrencias");
+
+    if (!listaOcorrencias || !modalOcorrencia || !formOcorrencia) {
+        return;
+    }
+
+    const sessao = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+    const perfil = String(sessao?.perfil || "").toLowerCase();
+    const autorizado = perfil === "cuidador" || perfil === "administrador" ||
+        perfil === "admin" || sessao?.email === "admin@memoriasegura.com";
+    let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias") || "[]");
+
+    if (!autorizado && abrirModalOcorrencia) {
+        const acoesOcorrencias = abrirModalOcorrencia.parentElement;
+        abrirModalOcorrencia.remove();
+        const aviso = document.createElement("span");
+        aviso.className = "pill info";
+        aviso.textContent = "Cadastro restrito à equipe";
+        acoesOcorrencias.appendChild(aviso);
+    }
+
+    function formatarData(data) {
+        return new Date(data).toLocaleString("pt-BR", {
+            day: "2-digit", month: "2-digit", year: "numeric",
+            hour: "2-digit", minute: "2-digit"
+        });
+    }
+
+    function criarCardOcorrencia(ocorrencia) {
+        const item = document.createElement("li");
+        item.className = "module-item";
+        item.innerHTML = `
+            <strong></strong>
+            <span></span>
+            <div class="meta"><span></span><span class="pill"></span></div>
+        `;
+        item.querySelector("strong").textContent = ocorrencia.tipo;
+        item.querySelector("span").textContent = ocorrencia.descricao;
+        item.querySelector(".meta span").textContent = formatarData(ocorrencia.data);
+        const prioridade = item.querySelector(".meta .pill");
+        prioridade.textContent = ocorrencia.prioridade;
+        prioridade.classList.add(ocorrencia.prioridade === "Alta" ? "warning" : ocorrencia.prioridade === "Baixa" ? "positive" : "info");
+        listaOcorrencias.appendChild(item);
+    }
+
+    function renderizarOcorrencias() {
+        listaOcorrencias.innerHTML = "";
+        ocorrencias.slice().sort((a, b) => new Date(b.data) - new Date(a.data)).forEach(criarCardOcorrencia);
+        contadorOcorrencias.textContent = `${ocorrencias.length} ${ocorrencias.length === 1 ? "registro" : "registros"}`;
+        if (!ocorrencias.length) {
+            const vazio = document.createElement("li");
+            vazio.className = "module-empty";
+            vazio.textContent = "Nenhuma ocorrência registrada.";
+            listaOcorrencias.appendChild(vazio);
+        }
+    }
+
+    function fecharModal() {
+        modalOcorrencia.style.display = "none";
+        formOcorrencia.reset();
+        document.getElementById("dataOcorrencia").value = new Date().toISOString().slice(0, 16);
+    }
+
+    if (abrirModalOcorrencia) {
+        abrirModalOcorrencia.addEventListener("click", function () {
+            modalOcorrencia.style.display = "flex";
+        });
+    }
+    fecharModalOcorrencia.addEventListener("click", fecharModal);
+    cancelarOcorrencia.addEventListener("click", fecharModal);
+    modalOcorrencia.addEventListener("click", function (evento) {
+        if (evento.target === modalOcorrencia) {
+            fecharModal();
+        }
+    });
+    formOcorrencia.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+        ocorrencias.push({
+            id: Date.now(),
+            tipo: document.getElementById("tipoOcorrencia").value,
+            prioridade: document.getElementById("prioridadeOcorrencia").value,
+            data: document.getElementById("dataOcorrencia").value,
+            descricao: document.getElementById("descricaoOcorrencia").value.trim()
+        });
+        localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
+        renderizarOcorrencias();
+        fecharModal();
+    });
+
+    document.getElementById("dataOcorrencia").value = new Date().toISOString().slice(0, 16);
+    renderizarOcorrencias();
+});
 
 //CONFIGURAÇÃO DA PAGINA DE MEDICAMENTOS: FIM
 
